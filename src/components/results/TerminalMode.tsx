@@ -149,7 +149,7 @@ export default function TerminalMode({ onExit }: TerminalModeProps) {
                 ))}
               </div>
               <p className="text-zinc-500 text-xs">
-                Full PDF: {bio.resumeUrl} (place file in public/resume.pdf)
+                Full PDF: {bio.resumeUrl}
               </p>
             </div>
           );

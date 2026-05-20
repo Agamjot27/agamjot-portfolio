@@ -170,7 +170,7 @@ function SearchControllerContent() {
     },
     {
       q: "How do I download Agamjot's resume?",
-      a: "Search 'resume' or 'download cv', or use the Resume button in the sidebar. Place your PDF at public/resume.pdf if you are the site owner."
+      a: "Search 'resume' or 'download cv', or use the Resume button in the sidebar to open the PDF."
     }
   ];
 
