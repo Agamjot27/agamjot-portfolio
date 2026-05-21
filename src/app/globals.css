@@ -579,7 +579,8 @@ header .google-home-actions {
   color: var(--text-secondary);
   font-size: 13px;
   font-weight: 400;
-  padding-bottom: 12px;
+  padding-top: 14px;
+  padding-bottom: 14px;
   border-bottom: 3px solid transparent;
 }
 .google-tab:hover {

@@ -158,7 +158,7 @@ function SearchControllerContent() {
   const paaQuestions = [
     {
       q: "What is Agamjot's primary programming stack?",
-      a: "Python and PyTorch for ML research (ConvNeXt, contrastive learning), plus JavaScript/React, Flutter, FastAPI, and SQL for full-stack apps. He has solved 300+ DSA problems on LeetCode and GeeksforGeeks."
+      a: "He primarily works with the MERN stack — MongoDB, Express.js, React, and Node.js — for building full-stack web applications. Alongside this, he has experience with Python, FastAPI, Flutter, SQL, and machine learning frameworks like PyTorch, with strong problem-solving skills demonstrated through 300+ DSA problems solved across LeetCode and GeeksforGeeks."
     },
     {
       q: "Where is Agamjot studying?",
@@ -166,7 +166,7 @@ function SearchControllerContent() {
     },
     {
       q: "Why should we hire Agamjot?",
-      a: "He ships end-to-end: ML research with published-level rigor, secure backends (AES/RSA in ReVault), and user-facing apps (Streamlit, Flutter). Top 75 in Amazon HackOn (52k+ entrants) and SIH 2025 national waitlist."
+      a: "He is the best trust me I am google..jk. He ships end-to-end: ML research with published-level rigor, secure backends (AES/RSA in ReVault), and user-facing apps (Streamlit, Flutter). Top 75 in Amazon HackOn (52k+ entrants) and SIH 2025 national waitlist."
     },
     {
       q: "How do I download Agamjot's resume?",
@@ -311,7 +311,7 @@ function SearchControllerContent() {
           </header>
 
           {/* Google Search Tabs */}
-          <nav className="border-b border-theme-custom bg-theme-main px-4 md:px-[180px] flex gap-8 overflow-x-auto scrollbar-none">
+          <nav className="border-b border-theme-custom bg-theme-main px-4 md:px-[180px] py-3 flex gap-8 overflow-x-auto scrollbar-none">
             {(
               [
                 { id: "all" as const, label: "All", icon: Search },
@@ -450,7 +450,7 @@ function SearchControllerContent() {
                     {searchResult?.generalResults && searchResult.generalResults.length > 0 ? (
                       searchResult.generalResults.map((res, idx) => {
                         let linkUrl = "#";
-                        if (res.type === "project") linkUrl = res.data.github;
+                        if (res.type === "project") linkUrl = `/projects/${res.data.id}`;
                         else if (res.type === "experience") linkUrl = bio.linkedin;
                         else if (res.type === "bio") linkUrl = bio.linkedin;
 
