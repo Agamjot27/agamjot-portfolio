@@ -66,7 +66,7 @@ export const bio: Bio = {
   phone: "+91 8750394949",
   location: "Manipal, Karnataka, India",
   github: "https://github.com/Agamjot27",
-  linkedin: "https://www.linkedin.com/in/agamjot-singh",
+  linkedin: "linkedin.com/in/agamjot-singh-b50412204/",
   resumeUrl: "/resume.pdf",
   summary:
     "B.Tech IT student at Manipal Institute of Technology with hands-on ML research (ConvNeXt, contrastive learning), full-stack builds (FastAPI, Flutter, React), and national-level hackathon results. Open to internships and new-grad roles in AI, backend, and product engineering.",

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { Project } from "@/data/portfolioData";
 import { motion } from "framer-motion";
 import { BarChart3, ExternalLink, Network } from "lucide-react";
@@ -31,14 +32,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <div className="mt-2 grid gap-4 md:grid-cols-[1fr_170px] md:items-start">
         <div className="min-w-0">
           <h4 className="m-0">
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="google-result-title"
-            >
+            <Link href={`/projects/${project.id}`} className="google-result-title">
               {project.title}
-            </a>
+            </Link>
           </h4>
 
           <p className="mt-1 text-sm text-theme-secondary leading-snug">{project.description}</p>
@@ -101,14 +97,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         >
           <Network className="w-3.5 h-3.5" /> {expanded ? "Hide architecture" : "View architecture"}
         </button>
-        <a
-          href={project.github}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href={`/projects/${project.id}`}
           className="text-google-link hover:underline inline-flex items-center gap-1"
         >
-          <Github className="w-3.5 h-3.5" /> Code
-        </a>
+          <Github className="w-3.5 h-3.5" /> Details
+        </Link>
         {project.live ? (
           <a
             href={project.live}
