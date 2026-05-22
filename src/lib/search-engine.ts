@@ -315,14 +315,14 @@ export const runSearch = (query: string): SearchResult => {
       result.featuredSnippet = {
         title: "Agamjot's Core Technologies",
         subtitle: "Full Spectrum Tech Stack",
-        description: "Python, PyTorch, TensorFlow, React, Flutter, FastAPI, Firebase, Docker, and 300+ DSA problems on LeetCode & GFG.",
+        description: "MERN stack (MongoDB, Express.js, React, Node.js), PostgreSQL, FastAPI, Python/PyTorch, Docker, Git, and 300+ DSA problems on LeetCode & GFG.",
         type: "skills",
         data: skills
       };
     }
   } else if (detectedIntent === "CONTACT") {
     result.featuredSnippet = {
-      title: "Get in Touch with Agamjot",
+      title: "Want to hire Agamjot?",
       subtitle: bio.location,
       description: `Email: ${bio.email}\nPhone: ${bio.phone}\nLinkedIn: ${bio.linkedin}\nGitHub: ${bio.github}`,
       type: "contact",
@@ -386,12 +386,15 @@ export const SUGGESTIONS = [
   "Show ML projects",
   "ReVault encrypted marketplace",
   "Call Intelligence NLP",
-  "ClubOps Firebase app",
+  "MERN full-stack projects",
+  "PostgreSQL backend projects",
   "Plant disease ConvNeXt research",
   "Open resume",
   "Work experience",
   "Skills in PyTorch",
-  "Skills in Flutter",
+  "Skills in MERN stack",
+  "Skills in PostgreSQL",
+  "Skills in Node.js",
   "Contact details",
   "Career timeline",
   "Achievements",
@@ -413,4 +416,3 @@ export const getSuggestions = (input: string): string[] => {
     return sLower.startsWith(normalized) || (sLower.includes(normalized) && sLower.length - normalized.length < 15);
   }).slice(0, 5); // Return top 5 matches
 };
-

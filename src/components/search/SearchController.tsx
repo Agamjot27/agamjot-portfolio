@@ -159,7 +159,7 @@ function SearchControllerContent() {
   const paaQuestions = [
     {
       q: "What is Agamjot's primary programming stack?",
-      a: "He primarily works with the MERN stack — MongoDB, Express.js, React, and Node.js — for building full-stack web applications. Alongside this, he has experience with Python, FastAPI, Flutter, SQL, and machine learning frameworks like PyTorch, with strong problem-solving skills demonstrated through 300+ DSA problems solved across LeetCode and GeeksforGeeks."
+      a: "He primarily works with the MERN stack — MongoDB, Express.js, React, and Node.js — for building full-stack web applications. He also uses PostgreSQL for relational database design, FastAPI for AI services, and Python/PyTorch for ML work, with 300+ DSA problems solved across LeetCode and GeeksforGeeks."
     },
     {
       q: "Where is Agamjot studying?",
@@ -167,7 +167,7 @@ function SearchControllerContent() {
     },
     {
       q: "Why should we hire Agamjot?",
-      a: "He is the best trust me I am google..jk. He ships end-to-end: ML research with published-level rigor, secure backends (AES/RSA in ReVault), and user-facing apps (Streamlit, Flutter). Top 75 in Amazon HackOn (52k+ entrants) and SIH 2025 national waitlist."
+      a: "He is the best trust me I am google..jk. He ships end-to-end: MERN products, PostgreSQL/MongoDB data layers, secure backend systems, and ML research with published-level rigor. Top 75 in Amazon HackOn (52k+ entrants), SIH 2025 national waitlist, and targeting SDE internships."
     },
     {
       q: "How do I download Agamjot's resume?",
@@ -500,7 +500,7 @@ function SearchControllerContent() {
                   </div>
                   <div>
                     <span className="text-theme-muted font-semibold">Primary Focus: </span>
-                    <span className="text-theme-primary">ML research, NLP, secure backends, Flutter & React</span>
+                    <span className="text-theme-primary">MERN stack, PostgreSQL, secure backends, ML research</span>
                   </div>
                   <div>
                     <span className="text-theme-muted font-semibold">GitHub: </span>

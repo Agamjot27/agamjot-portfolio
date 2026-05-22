@@ -22,7 +22,7 @@ export const skill3DShowcase: SkillAsset[] = [
   },
   {
     id: "javascript",
-    name: "JavaScript & React",
+    name: "MERN Frontend",
     level: 88,
     modelPath: `${BASE}/react_logo-transformed.glb`,
     fitMargin: 1.7,
@@ -30,8 +30,8 @@ export const skill3DShowcase: SkillAsset[] = [
   },
   {
     id: "nodejs",
-    name: "Node.js & Backend",
-    level: 82,
+    name: "Node.js, Express & PostgreSQL",
+    level: 86,
     modelPath: `${BASE}/node-transformed.glb`,
     fitMargin: 1.6,
     rotation: [0, -Math.PI / 2, 0],
@@ -74,7 +74,8 @@ export function filter3DSkills(names: string[]): SkillAsset[] {
         n.includes(id) ||
         (n.includes("react") && id === "javascript") ||
         (n.includes("pytorch") && id === "python") ||
-        (n.includes("fastapi") && id === "nodejs") ||
+        (n.includes("express") && id === "nodejs") ||
+        (n.includes("postgresql") && id === "nodejs") ||
         (n.includes("sql") && id === "nodejs")
     );
   });

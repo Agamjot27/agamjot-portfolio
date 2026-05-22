@@ -124,7 +124,7 @@ export default function SnippetView({ snippet, onQueryChange }: SnippetViewProps
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <p className="text-theme-primary text-sm leading-relaxed">
-                Open to internships and new-grad roles in ML, backend, and full-stack engineering. Based in Manipal, Karnataka.
+                Targeting SDE internships with MERN, PostgreSQL, backend systems, and AI-product engineering. Based in Manipal, Karnataka.
               </p>
               <div className="space-y-2">
                 <div className="flex items-center gap-2.5 text-xs text-theme-muted">

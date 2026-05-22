@@ -76,8 +76,8 @@ export interface Bio {
 
 export const bio: Bio = {
   name: "Agamjot Singh",
-  title: "B.Tech IT · ML Research Intern · Full-Stack Developer",
-  tagline: "Deep learning research, secure backends, and apps that ship.",
+  title: "B.Tech IT - ML Research Intern - MERN Full-Stack Developer",
+  tagline: "MERN products, PostgreSQL-backed systems, and AI features that ship.",
   email: "agamjot2712@gmail.com",
   phone: "+91 8750394949",
   location: "Manipal, Karnataka, India",
@@ -85,13 +85,13 @@ export const bio: Bio = {
   linkedin: "linkedin.com/in/agamjot-singh-b50412204/",
   resumeUrl: "/resume.pdf",
   summary:
-    "B.Tech IT student at Manipal Institute of Technology with hands-on ML research (ConvNeXt, contrastive learning), full-stack builds (FastAPI, Flutter, React), and national-level hackathon results. Open to internships and new-grad roles in AI, backend, and product engineering.",
+    "B.Tech IT student at Manipal Institute of Technology with hands-on ML research, MERN full-stack development, PostgreSQL/MongoDB database design, and national-level hackathon results. Targeting SDE internship roles across full-stack, backend, and AI-product engineering.",
   aboutLong:
-    "I'm Agamjot Singh, a B.Tech Information Technology student at Manipal Institute of Technology (GPA 7.99). I research computer vision at MIT Manipal—building a 39-class plant disease classifier with ConvNeXt, label-aware attention, and CLIP-style contrastive learning (~95% accuracy). Outside the lab I ship full-stack products: NLP call analytics with LLMs, an encrypted digital-asset resale platform, and a Firebase-powered club operations app. I've ranked top 75 in Amazon HackOn (52k+ participants) and was top-2 waitlisted for Smart India Hackathon 2025 (Ministry of Steel / NMDC). I also lead placement coordination and ACM workshops on campus. I'm strongest in Python, PyTorch, and React, with 300+ DSA problems solved on LeetCode and GFG.",
+    "I'm Agamjot Singh, a B.Tech Information Technology student at Manipal Institute of Technology (GPA 7.99). I research computer vision at MIT Manipal, building a 39-class plant disease classifier with ConvNeXt, label-aware attention, and CLIP-style contrastive learning (~95% accuracy). Outside the lab I build SDE-focused full-stack products with the MERN stack, PostgreSQL, MongoDB, REST APIs, authentication, and secure backend architecture. I've ranked top 75 in Amazon HackOn (52k+ participants) and was top-2 waitlisted for Smart India Hackathon 2025 (Ministry of Steel / NMDC). I also lead placement coordination and ACM workshops on campus. I'm strongest in JavaScript/React, Node.js/Express, databases, Python, and problem solving, with 300+ DSA problems solved on LeetCode and GFG.",
   avatar: "/agamjot-profile.jpeg",
   strengths: [
     "ML depth: transfer learning, multi-loss training, OpenCV preprocessing, and attention mechanisms on real-world vision data.",
-    "Full-stack delivery: Streamlit, FastAPI, MySQL, Flutter, Firebase, and REST APIs with security-first design (AES/RSA).",
+    "Full-stack delivery: MERN stack, PostgreSQL, MongoDB, REST APIs, authentication, and security-first backend design.",
     "Competitive engineering: Amazon HackOn top 75 / 52k+ and SIH 2025 national waitlist (Ministry of Steel).",
     "Community leadership: placement drives, career workshops for 300+ students, and ACM tech education."
   ],
@@ -432,12 +432,13 @@ export const skills: SkillCategory[] = [
     ]
   },
   {
-    category: "Frameworks & ML",
+    category: "Frameworks & Full-Stack",
     items: [
-      { name: "PyTorch", level: 90 },
-      { name: "TensorFlow", level: 75 },
+      { name: "Node.js", level: 86 },
+      { name: "Express.js", level: 84 },
       { name: "React / ReactJS", level: 85 },
-      { name: "Flutter", level: 80 },
+      { name: "MongoDB", level: 84 },
+      { name: "PostgreSQL", level: 82 },
       { name: "FastAPI", level: 82 }
     ]
   },
@@ -451,12 +452,21 @@ export const skills: SkillCategory[] = [
     ]
   },
   {
+    category: "AI / ML",
+    items: [
+      { name: "PyTorch", level: 90 },
+      { name: "TensorFlow", level: 75 },
+      { name: "NLP", level: 82 },
+      { name: "Computer Vision", level: 86 }
+    ]
+  },
+  {
     category: "Tools & Platforms",
     items: [
       { name: "Docker", level: 78 },
       { name: "Git", level: 88 },
-      { name: "MySQL", level: 82 },
-      { name: "Firebase", level: 80 },
+      { name: "PostgreSQL", level: 82 },
+      { name: "MongoDB", level: 84 },
       { name: "Android Studio", level: 72 },
       { name: "Azure Fundamentals", level: 70 },
       { name: "Linux & Shell", level: 80 },
@@ -485,22 +495,22 @@ export const easterEggs: Record<string, { title: string; subtitle?: string; cont
     title: "Hiring signal",
     subtitle: "Available for internships & new grad (2027)",
     content:
-      "Agamjot combines ML research (ConvNeXt, contrastive learning), secure full-stack systems (FastAPI, encryption), and shipped apps (Flutter, Streamlit). Top 75 in Amazon HackOn / 52k+. Email agamjot2712@gmail.com or search 'contact' for details."
+      "Agamjot combines MERN full-stack development, PostgreSQL/MongoDB database work, secure backend systems, ML research, and 300+ DSA problems. Targeting SDE internships. Top 75 in Amazon HackOn / 52k+. Email agamjot2712@gmail.com or search 'contact' for details."
   },
   "roast my code": {
     title: "Agent roast protocol online",
     subtitle: "Scanning repositories…",
     content:
-      "You want a roast? Fine: your LeetCode streak is longer than some of your commit messages, you have more loss functions than integration tests, and that one Streamlit app definitely has a button labeled 'Run' that does everything. Ship tests next time, legend."
+      "You want a roast? Fine: your LeetCode streak is longer than some of your commit messages, your API naming is probably more dramatic than the actual endpoint, and at least one dashboard button definitely does five jobs. Ship tests next time, legend."
   },
   "why frontend over backend": {
     title: "Why full-stack, not either/or",
     content:
-      "ML models only matter when people can use them. Agamjot builds the model (PyTorch, OpenCV) and the surface (Streamlit, Flutter, React) so demos become products—not notebooks stuck on localhost."
+      "Good SDE work sits across product surfaces, APIs, databases, and reliability. Agamjot builds MERN interfaces, Node/Express APIs, PostgreSQL/MongoDB data layers, and AI features so demos become usable products."
   },
   "favorite tech stack": {
     title: "Core arsenal",
     content:
-      "Python + PyTorch for vision/NLP, FastAPI + MySQL for APIs, Flutter + Firebase for mobile, React for web. Tools: Docker, Git, Linux. 300+ DSA problems on LeetCode & GFG."
+      "MERN stack: MongoDB, Express.js, React, Node.js, with PostgreSQL for relational systems. Python + PyTorch for AI/ML, FastAPI for AI services, Docker/Git/Linux for delivery. 300+ DSA problems on LeetCode & GFG."
   }
 };

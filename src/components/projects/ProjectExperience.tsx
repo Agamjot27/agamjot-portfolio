@@ -14,7 +14,6 @@ import {
   Database,
   ExternalLink,
   Eye,
-  FileCode2,
   Gauge,
   Layers3,
   LockKeyhole,
@@ -568,11 +567,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
                 <DetailButton href={project.live}>
                   <ExternalLink className="h-4 w-4" /> Live demo
                 </DetailButton>
-              ) : (
-                <DetailButton href={project.github}>
-                  <FileCode2 className="h-4 w-4" /> Engineering notes
-                </DetailButton>
-              )}
+              ) : null}
             </motion.div>
           </motion.div>
 
