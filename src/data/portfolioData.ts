@@ -82,7 +82,7 @@ export const bio: Bio = {
   phone: "+91 8750394949",
   location: "Manipal, Karnataka, India",
   github: "https://github.com/Agamjot27",
-  linkedin: "linkedin.com/in/agamjot-singh-b50412204/",
+  linkedin: "https://www.linkedin.com/in/agamjot-singh-b50412204/",
   resumeUrl: "/resume.pdf",
   summary:
     "B.Tech IT student at Manipal Institute of Technology with hands-on ML research, MERN full-stack development, PostgreSQL/MongoDB database design, and national-level hackathon results. Targeting SDE internship roles across full-stack, backend, and AI-product engineering.",
