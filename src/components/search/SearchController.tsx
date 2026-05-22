@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback, useRef, Suspense } from "react
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { runSearch, SearchResult } from "@/lib/search-engine";
-import { applyTheme, getSavedTheme, persistTheme, type Theme } from "@/lib/theme";
+import { applyTheme, DEFAULT_THEME, getSavedTheme, persistTheme, type Theme } from "@/lib/theme";
 import { bio, projects, education } from "@/data/portfolioData";
 import GoogleLogo from "../ui/GoogleLogo";
 import SearchBox from "./SearchBox";
@@ -17,9 +17,10 @@ import TerminalMode from "../results/TerminalMode";
 import AmbientBackground from "../ui/AmbientBackground";
 import StarBackground from "../ui/StarBackground";
 import GoogleAppsMenu from "../ui/GoogleAppsMenu";
+import ThemeSwitcher from "../ui/ThemeSwitcher";
 import {
   Search, Code, Briefcase, Award, User,
-  ChevronDown, ChevronUp, Mail, FileText, Sun, Moon,
+  ChevronDown, ChevronUp, Mail, FileText,
 } from "lucide-react";
 
 type TabType = "all" | "projects" | "experience" | "skills" | "about";
@@ -36,7 +37,7 @@ function SearchControllerContent() {
   const [activeTab, setActiveTab] = useState<TabType>("all");
   const [view, setView] = useState<"home" | "results" | "terminal">("home");
   const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
-  const [theme, setTheme] = useState<Theme>(() => getSavedTheme() ?? "light");
+  const [theme, setTheme] = useState<Theme>(() => getSavedTheme() ?? DEFAULT_THEME);
   const [searchTime, setSearchTime] = useState(0);
   const [liveQuery, setLiveQuery] = useState("");
   
@@ -245,21 +246,8 @@ function SearchControllerContent() {
             </button>
           </div>
 
-          <div className="fixed bottom-0 left-0 right-0 flex items-center justify-end gap-4 px-6 py-3 text-xs text-theme-tertiary">
-            <button
-              type="button"
-              onClick={() => changeTheme("light")}
-              className={theme === "light" ? "text-theme-primary underline" : "hover:underline"}
-            >
-              Light
-            </button>
-            <button
-              type="button"
-              onClick={() => changeTheme("dark")}
-              className={theme === "dark" ? "text-theme-primary underline" : "hover:underline"}
-            >
-              Dark
-            </button>
+          <div className="fixed bottom-0 left-0 right-0 flex items-center justify-end gap-4 px-6 py-4 text-xs text-theme-tertiary">
+            <ThemeSwitcher theme={theme} onChange={changeTheme} />
           </div>
         </motion.main>
         </>
@@ -298,15 +286,7 @@ function SearchControllerContent() {
             {/* Settings dropdown */}
             <div className="hidden md:flex items-center gap-2 ml-auto">
               <GoogleAppsMenu onNavigate={handleSearch} />
-              <button
-                type="button"
-                onClick={() => changeTheme(theme === "light" ? "dark" : "light")}
-                className="p-2 text-theme-secondary hover:bg-theme-elevated rounded-full transition-colors"
-                title={theme === "light" ? "Dark theme" : "Light theme"}
-                aria-label="Toggle theme"
-              >
-                {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-              </button>
+              <ThemeSwitcher theme={theme} onChange={changeTheme} compact />
             </div>
           </header>
 

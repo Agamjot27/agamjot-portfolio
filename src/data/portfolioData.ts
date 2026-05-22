@@ -12,6 +12,22 @@ export interface Project {
   role: string;
   duration?: string;
   screenshot?: string;
+  caseStudy?: {
+    problem: string;
+    whyBuilt: string;
+    users: string;
+    impact: string;
+    architecture: {
+      interface: string;
+      orchestration: string;
+      auth: string;
+      data: string;
+      intelligence: string;
+    };
+    journey: { phase: string; title: string; copy: string }[];
+    lessons: { title: string; copy: string }[];
+    code: Partial<Record<"frontend" | "backend" | "data" | "intelligence", string>>;
+  };
 }
 
 export interface Experience {
@@ -90,51 +106,222 @@ export const bio: Bio = {
 export const projects: Project[] = [
   {
     id: "call-intelligence-nlp",
-    title: "Call Intelligence via NLP",
+    title: "Unified AI Customer Care System",
     description:
-      "Full-stack Streamlit app for real-time customer support call analysis using NLP and LLMs.",
+      "FastAPI + Streamlit customer support automation platform for L1 chat, grievance routing, and call transcript intelligence.",
     longDescription:
-      "Architected a Streamlit web application that ingests customer support call transcripts and runs automated analysis pipelines. Integrated Mistral AI and Groq APIs for sentiment analysis, urgency detection, issue classification, and call summarisation—cutting manual transcript review effort by roughly 40%.",
-    tech: ["Python", "Streamlit", "NLP", "Mistral AI", "Groq API", "LLMs"],
+      "Built a modular AI customer care system that automates Level 1 support queries, classifies and routes grievances, and extracts actionable insights from unstructured call transcripts. The system uses a Streamlit frontend, FastAPI REST backend, Pydantic request and response models, and a Groq-powered Llama3-8b NLP service for sentiment analysis, intent detection, response generation, transcript summarization, tag extraction, and context-aware Q&A.",
+    tech: ["Python", "FastAPI", "Streamlit", "Pydantic", "Groq API", "Llama3-8b", "NLP"],
     github: "https://github.com/Agamjot27",
     live: "",
-    role: "Full-Stack Developer",
+    role: "Full-Stack AI Engineer",
     duration: "May 2025 – June 2025",
     category: "ML/AI",
     metrics: [
-      { label: "Manual effort reduced", value: "~40%" },
-      { label: "Analysis modes", value: "4+" }
+      { label: "Manual review effort reduced", value: "~40%" },
+      { label: "Grievance resolution time reduced", value: "~30%" },
+      { label: "Core AI modules", value: "3" }
     ],
     keyFeatures: [
-      "Real-time transcript ingestion and analysis dashboard.",
-      "Sentiment, urgency, and issue-type classification pipelines.",
-      "LLM-powered call summarisation via Mistral and Groq.",
-      "Streamlit UI for fast iteration and demo-ready workflows."
-    ]
+      "L1 automation chatbot with sentiment analysis, intent detection, technical specialization, and escalation prediction.",
+      "Smart grievance management that classifies complaints, assigns priority, and suggests relevant departments.",
+      "Call intelligence pipeline for transcript summaries, tag/entity extraction, sentiment analysis, and transcript Q&A.",
+      "FastAPI service-layer architecture with route handlers for chat, grievance management, and call analysis.",
+      "Groq Llama3-8b integration through an OpenAI-compatible client with structured JSON parsing and fallbacks.",
+      "Streamlit frontend with three operational tabs and session-state based conversation continuity."
+    ],
+    caseStudy: {
+      problem:
+        "Customer support teams deal with long hold times, delayed grievance routing, and large volumes of unstructured call transcripts that are slow to review manually.",
+      whyBuilt:
+        "The system was built to turn repetitive L1 support and transcript review into an AI-assisted workflow that can answer common issues, route serious complaints, and surface training insights quickly.",
+      users:
+        "Support managers monitor escalations and quality insights, agents handle routed cases with better context, and customers get faster first responses through text or simulated voice flows.",
+      impact:
+        "The platform targets roughly 40% less manual transcript review effort and roughly 30% faster grievance resolution through automated classification and routing.",
+      architecture: {
+        interface:
+          "Streamlit provides a three-tab command surface for L1 automation, grievance management, and call intelligence, while preserving conversation state in st.session_state.",
+        orchestration:
+          "FastAPI route handlers validate requests with Pydantic and coordinate service calls for chat, grievance classification, call analysis, and transcript Q&A.",
+        auth:
+          "The demo is stateless and unauthenticated; production notes call for JWT/OAuth, rate limiting, CORS hardening, and persistent user/session storage.",
+        data:
+          "The current design avoids a database for demo speed, using in-memory frontend session state; production scaling would add PostgreSQL or MongoDB plus Redis caching.",
+        intelligence:
+          "A centralized NLP service calls Groq's Llama3-8b model for sentiment, intent, generation, summarization, entity extraction, escalation signals, and context-aware Q&A."
+      },
+      journey: [
+        {
+          phase: "Problem",
+          title: "Support work was slow at the exact points users notice",
+          copy: "The project began with three support bottlenecks: customers waiting on simple issues, grievances being misrouted, and managers manually reading transcripts for quality signals."
+        },
+        {
+          phase: "Research",
+          title: "Mapped customer-care work into three AI surfaces",
+          copy: "The system was split into L1 chat automation, grievance routing, and call intelligence so each NLP capability had a clear operational job."
+        },
+        {
+          phase: "Failed attempts",
+          title: "Avoided a single generic chatbot",
+          copy: "A plain chatbot would hide the strongest engineering work, so the final design exposes sentiment, intent, specialization, escalation, summaries, and Q&A as separate inspectable outputs."
+        },
+        {
+          phase: "Architecture Decisions",
+          title: "Separated HTTP handling from NLP behavior",
+          copy: "FastAPI routers handle validation and orchestration, while the NLP service owns prompts, Groq calls, structured JSON parsing, fallbacks, and business rules."
+        },
+        {
+          phase: "Optimization",
+          title: "Designed for scaling beyond the demo",
+          copy: "The stateless backend can be horizontally scaled; the documented next steps include Redis caching, PostgreSQL persistence, queues for LLM calls, and parallel NLP tasks."
+        },
+        {
+          phase: "Final Outcome",
+          title: "A modular AI support platform",
+          copy: "The final product demonstrates enterprise support automation with live chat intelligence, grievance triage, transcript summarization, and context-aware transcript questioning."
+        }
+      ],
+      lessons: [
+        {
+          title: "Technical lesson",
+          copy: "LLM products become more reliable when model calls are isolated behind a service layer with schema validation, whitelist checks, and fallback behavior."
+        },
+        {
+          title: "Mistake corrected",
+          copy: "The strongest version was not one all-purpose chat box; it was a system that made each NLP decision visible and reviewable."
+        },
+        {
+          title: "Scaling insight",
+          copy: "A stateless FastAPI backend is easy to demo and horizontally scale, but production needs persistence, caching, queues, and request prioritization."
+        },
+        {
+          title: "Design tradeoff",
+          copy: "Streamlit accelerated delivery and demos, while a production customer-facing version would move the frontend to React or Vue with WebSockets."
+        }
+      ],
+      code: {
+        frontend:
+          "tab_chat, tab_grievance, tab_call = st.tabs([\n  'L1 Automation',\n  'Grievance Management',\n  'Call Intelligence'\n])\nst.session_state.conversation_history.append(user_message)",
+        backend:
+          "app.include_router(chatbot.router, prefix='/l1_automation')\napp.include_router(grievance.router, prefix='/grievance_management')\napp.include_router(call_analysis.router, prefix='/call_intelligence')",
+        data:
+          "ChatRequest\n  message: str\n  user_id: str\n  conversation_history: list\n\nChatResponse\n  response, sentiment, intent, options, escalate_to_human",
+        intelligence:
+          "sentiment = nlp_service.get_sentiment(message)\nintent = nlp_service.get_intent_and_specialization(message)\nreply = nlp_service.get_generative_response(message, history)\nescalate = nlp_service.predict_escalation(sentiment, intent, history)"
+      }
+    }
   },
   {
     id: "revault",
     title: "ReVault — Secure Encrypted Digital Asset Resale",
     description:
-      "FastAPI + MySQL marketplace for secure resale of tickets and gaming accounts with end-to-end encryption.",
+      "React + FastAPI + MongoDB marketplace for encrypted resale of gaming accounts, event tickets, and digital assets.",
     longDescription:
-      "Built a marketplace enabling secure resale of digital assets. Implemented AES-256 encryption for stored assets, RSA key exchange for buyer-only decryption, SHA-256 integrity checks, and digital signatures to prevent tampering. Delivered scalable REST APIs for upload, listing, and transfer with role-based access control.",
-    tech: ["FastAPI", "Python", "MySQL", "AES-256", "RSA", "REST APIs"],
+      "Built a secure digital asset marketplace where sensitive credentials are encrypted before storage and asset transfers are backed by integrity checks, signatures, role-based access, admin approval, and blockchain audit records. The platform combines a React/Tailwind marketplace UI, FastAPI backend, MongoDB persistence with Beanie ODM, AES-256-GCM encryption, RSA-2048 key exchange, SHA-256 hashes, RSA-PSS digital signatures, JWT authentication, and Web3 transaction logging.",
+    tech: ["React", "FastAPI", "MongoDB", "AES-256-GCM", "RSA-2048", "SHA-256", "JWT", "Web3.py"],
     github: "https://github.com/Agamjot27",
     live: "",
-    role: "Backend & Security Engineer",
+    role: "Full-Stack Security Engineer",
     duration: "October 2025 – December 2025",
     category: "Full-Stack",
     metrics: [
-      { label: "Encryption", value: "AES-256 + RSA" },
-      { label: "Integrity", value: "SHA-256" }
+      { label: "Encryption strength", value: "AES-256" },
+      { label: "Key exchange", value: "RSA-2048" },
+      { label: "Trust layers", value: "5" }
     ],
     keyFeatures: [
-      "Encrypted asset storage and buyer-only decryption flow.",
-      "Tamper detection via hashing and digital signatures.",
-      "Role-based access control across marketplace APIs.",
-      "Listing, upload, and secure transfer endpoints."
-    ]
+      "Three-step asset listing flow that encrypts sensitive credentials before they are stored.",
+      "AES-256-GCM encryption with per-asset random keys, IVs, and authentication tags.",
+      "RSA-2048/OAEP key exchange so only authorized parties can decrypt asset credentials.",
+      "SHA-256 integrity hashes and RSA-PSS digital signatures to detect tampering and prove authenticity.",
+      "JWT authentication with user/admin roles, admin approval workflow, and secure credential viewing.",
+      "MongoDB asset schema storing encrypted payloads, encrypted keys, signatures, transaction logs, and audit state.",
+      "Blockchain integration for immutable asset verification and transaction records."
+    ],
+    caseStudy: {
+      problem:
+        "Digital asset resale is risky because credentials can be leaked, modified, or disputed before a buyer receives them. The marketplace needed trust without exposing sensitive data too early.",
+      whyBuilt:
+        "ReVault was built to make secure resale feel usable: users can list assets normally while encryption, key exchange, integrity checks, signatures, and audit records work behind the scenes.",
+      users:
+        "Sellers list gaming accounts, event tickets, and digital content; buyers purchase verified assets; admins review encrypted listings, approve assets, and manage trust workflows.",
+      impact:
+        "The project demonstrates five trust layers: confidentiality, integrity, authenticity, non-repudiation, and role-based access control.",
+      architecture: {
+        interface:
+          "The React 18 + Tailwind frontend includes a marketplace, category filters, list-asset flow, security indicators, verification badges, and an admin dashboard.",
+        orchestration:
+          "FastAPI exposes documented REST endpoints for authentication, asset listing, encrypted upload, admin review, purchase, decryption, health checks, and blockchain recording.",
+        auth:
+          "JWT tokens and role-based access separate normal users from admins; bcrypt password hashing protects accounts while admin routes gate sensitive credential operations.",
+        data:
+          "MongoDB stores users, encrypted asset payloads, encrypted AES keys, SHA-256 data hashes, RSA-PSS signatures, blockchain hashes, status, and audit history.",
+        intelligence:
+          "The security layer combines AES-256-GCM, RSA-2048/OAEP, SHA-256, RSA-PSS signatures, and Web3 transaction logging to make asset transfer verifiable."
+      },
+      journey: [
+        {
+          phase: "Problem",
+          title: "The marketplace needed trust before transfer",
+          copy: "Selling credentials and digital assets creates a trust gap: sellers should not expose plaintext early, and buyers need proof the asset is legitimate."
+        },
+        {
+          phase: "Research",
+          title: "Modeled security guarantees as product features",
+          copy: "The design mapped confidentiality, integrity, authenticity, non-repudiation, access control, and auditability into visible product flows."
+        },
+        {
+          phase: "Failed Attempts",
+          title: "A normal CRUD marketplace was not enough",
+          copy: "Basic listings and purchases would not prove ownership or prevent tampering, so encryption metadata and verification records became first-class data."
+        },
+        {
+          phase: "Architecture Decisions",
+          title: "Layered cryptography through the backend",
+          copy: "AES protects asset credentials, RSA protects AES keys, hashes verify integrity, signatures prove origin, and blockchain records preserve audit history."
+        },
+        {
+          phase: "Optimization",
+          title: "Made complex security inspectable",
+          copy: "The UI surfaces encryption status, verification badges, admin approval, category filters, and encrypted payload views so judges can see the trust system working."
+        },
+        {
+          phase: "Final Outcome",
+          title: "A secure resale platform with an audit trail",
+          copy: "ReVault combines a polished marketplace with a cryptographic backend and blockchain logging to demonstrate secure digital asset transfer."
+        }
+      ],
+      lessons: [
+        {
+          title: "Technical lesson",
+          copy: "Security features are easier to trust when the data model stores proof: ciphertext, IV, tag, encrypted key, hash, signature, and transaction hash."
+        },
+        {
+          title: "Mistake corrected",
+          copy: "The platform could not treat encryption as a hidden backend utility; users and admins needed visible verification states."
+        },
+        {
+          title: "Scaling insight",
+          copy: "Production readiness would require HSM-backed key storage, key rotation, load balancing, sharding, CDN-backed files, formal audits, and penetration testing."
+        },
+        {
+          title: "Design tradeoff",
+          copy: "The demo prioritizes transparent security and judge-friendly flows, while production would add stronger privacy controls such as multi-signature flows and zero-knowledge proofs."
+        }
+      ],
+      code: {
+        frontend:
+          "<SecurityBadge status='AES-256 encrypted' />\n<CategoryFilter value={category} onChange={setCategory} />\n<ListAssetStep sensitiveFields={credentials} />",
+        backend:
+          "encrypted = aes_gcm.encrypt(credentials, asset_key)\nencrypted_key = rsa_oaep.encrypt(asset_key, buyer_public_key)\nsignature = rsa_pss.sign(asset_hash, seller_private_key)",
+        data:
+          "assets\n  encrypted_data: { ciphertext, iv, tag }\n  encrypted_key: base64_rsa_wrapped_key\n  data_hash: sha256_hash\n  signature: rsa_pss_signature\n  blockchain_hash: transaction_hash",
+        intelligence:
+          "verify_hash(ciphertext, data_hash)\nverify_signature(data_hash, signature, seller_public_key)\nrecord_transaction(asset_id, buyer_id, blockchain_hash)"
+      }
+    }
   },
   {
     id: "clubops",

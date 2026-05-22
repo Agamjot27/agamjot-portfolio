@@ -16,6 +16,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <motion.article
+      layoutId={`project-card-${project.id}`}
       className="interactive-project-card max-w-[660px] mb-6"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -33,7 +34,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="min-w-0">
           <h4 className="m-0">
             <Link href={`/projects/${project.id}`} className="google-result-title">
+              <motion.span layoutId={`project-title-${project.id}`}>
               {project.title}
+              </motion.span>
             </Link>
           </h4>
 
@@ -48,13 +51,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </div>
         </div>
 
-        <div className="project-visual" aria-hidden>
+        <motion.div layoutId={`project-visual-${project.id}`} className="project-visual" aria-hidden>
           <span className="project-visual-orbit" />
           <span className="project-visual-node project-visual-node-a" />
           <span className="project-visual-node project-visual-node-b" />
           <span className="project-visual-node project-visual-node-c" />
           <BarChart3 className="h-8 w-8" />
-        </div>
+        </motion.div>
       </div>
 
       {project.metrics && project.metrics.length > 0 && (
