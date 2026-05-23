@@ -338,7 +338,7 @@ function SearchControllerContent() {
 
           {/* Tabs Nav — fixed below header, morphs into pill on scroll */}
           <div className={`fixed left-0 right-0 z-20 flex justify-center transition-all duration-500 ease-in-out ${
-            isScrolled ? "top-[57px] px-4 py-2" : "top-[57px] px-0 py-0"
+            isScrolled ? "top-[108px] md:top-[57px] px-4 py-2" : "top-[108px] md:top-[57px] px-0 py-0"
           }`}>
             <nav className={`flex overflow-x-auto scrollbar-none transition-all duration-500 ease-in-out ${
               isScrolled
@@ -368,7 +368,7 @@ function SearchControllerContent() {
           </div>
 
         <motion.main
-          className="relative z-10 flex-1 flex flex-col bg-theme-main/90 backdrop-blur-[2px] pt-[120px]"
+          className="relative z-10 flex-1 flex flex-col bg-theme-main/90 backdrop-blur-[2px] pt-[170px] md:pt-[120px]"
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ type: "spring", stiffness: 120, damping: 20 }}
