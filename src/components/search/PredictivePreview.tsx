@@ -37,7 +37,7 @@ function pickPreview(query: string) {
     };
   }
 
-  if (["hire", "resume", "contact", "about"].some((term) => normalized.includes(term))) {
+  if (["hire", "resume", "contact", " "].some((term) => normalized.includes(term))) {
     return {
       type: "Profile shortcut",
       title: "Quick profile",

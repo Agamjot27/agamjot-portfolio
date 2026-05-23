@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import GradientText from "./GradientText";
 
 interface GoogleLogoProps {
   size?: "sm" | "md" | "lg";
@@ -8,16 +9,6 @@ interface GoogleLogoProps {
 }
 
 export default function GoogleLogo({ size = "md", interactive = true }: GoogleLogoProps) {
-  const letters = [
-    { char: "A", color: "text-[#4285F4]" },
-    { char: "g", color: "text-[#EA4335]" },
-    { char: "a", color: "text-[#FBBC05]" },
-    { char: "m", color: "text-[#4285F4]" },
-    { char: "j", color: "text-[#34A853]" },
-    { char: "o", color: "text-[#EA4335]" },
-    { char: "t", color: "text-[#4285F4]" },
-  ];
-
   const sizeClasses = {
     sm: "text-[22px] leading-none",
     md: "text-[32px] leading-none",
@@ -31,11 +22,15 @@ export default function GoogleLogo({ size = "md", interactive = true }: GoogleLo
       tabIndex={interactive ? 0 : undefined}
     >
       <span className={sizeClasses[size]} aria-label="Agamjot">
-        {letters.map((l, idx) => (
-          <span key={idx} className={l.color}>
-            {l.char}
-          </span>
-        ))}
+        <GradientText
+          colors={["#ffffffff", "#353232ff"]}
+          animationSpeed={3}
+          direction="horizontal"
+          pauseOnHover
+          showBorder={false}
+        >
+          Agamjot
+        </GradientText>
       </span>
     </div>
   );

@@ -42,10 +42,10 @@
 }
 
 .theme-dark {
-  --bg-color: #0b0f19;
-  --bg-card: #111827;
-  --bg-elevated: #1f2937;
-  --bg-footer: #070b12;
+  --bg-color: #111214;
+  --bg-card: #1a1b1e;
+  --bg-elevated: #222326;
+  --bg-footer: #0a0a0b;
   --text-primary: #ffffff;
   --text-secondary: #9ca3af;
   --text-tertiary: #7d8797;
@@ -54,23 +54,23 @@
   --border-light: rgba(255, 255, 255, 0.08);
   --link-color: #8ab4f8;
   --link-visited: #c58af9;
-  --btn-bg: rgba(17, 24, 39, 0.78);
-  --btn-bg-hover: rgba(31, 41, 55, 0.92);
+  --btn-bg: rgba(26, 27, 30, 0.78);
+  --btn-bg-hover: rgba(34, 35, 38, 0.92);
   --btn-text: #ffffff;
   --btn-border: rgba(255, 255, 255, 0.12);
   --btn-border-hover: rgba(138, 180, 248, 0.42);
-  --search-shadow: 0 20px 80px rgba(0, 0, 0, 0.38), 0 0 38px rgba(138, 180, 248, 0.12);
+  --search-shadow: 0 20px 80px rgba(0, 0, 0, 0.38), 0 0 38px rgba(138, 180, 248, 0.08);
   --search-shadow-hover: 0 18px 56px rgba(0, 0, 0, 0.32);
-  --snippet-bg: rgba(31, 41, 55, 0.72);
-  --glow-color: rgba(138, 180, 248, 0.22);
-  --surface-glass: rgba(17, 24, 39, 0.68);
-  --surface-strong: #111827;
+  --snippet-bg: rgba(26, 27, 30, 0.72);
+  --glow-color: rgba(138, 180, 248, 0.10);
+  --surface-glass: rgba(26, 27, 30, 0.68);
+  --surface-strong: #1a1b1e;
   --shadow-soft: 0 26px 80px rgba(0, 0, 0, 0.34);
   --shadow-hover: 0 34px 96px rgba(0, 0, 0, 0.44);
-  --project-bg: #0b0f19;
-  --project-surface: rgba(17, 24, 39, 0.76);
-  --project-surface-strong: #111827;
-  --project-elevated: #1f2937;
+  --project-bg: #111214;
+  --project-surface: rgba(26, 27, 30, 0.76);
+  --project-surface-strong: #1a1b1e;
+  --project-elevated: #222326;
   --project-text: #ffffff;
   --project-muted: #9ca3af;
   --project-faint: #7d8797;
@@ -78,7 +78,7 @@
   --project-line: rgba(138, 180, 248, 0.36);
   --project-accent: #8ab4f8;
   --project-accent-soft: rgba(138, 180, 248, 0.13);
-  --project-glow: rgba(138, 180, 248, 0.28);
+  --project-glow: rgba(138, 180, 248, 0.14);
 }
 
 @theme {
@@ -501,7 +501,7 @@ header .google-home-actions {
   box-shadow: 0 20px 55px rgba(0, 0, 0, 0.12);
   background:
     linear-gradient(color-mix(in srgb, var(--bg-card) 94%, transparent), color-mix(in srgb, var(--bg-card) 94%, transparent)) padding-box,
-    linear-gradient(135deg, rgba(138, 180, 248, 0.5), rgba(251, 188, 4, 0.2), rgba(52, 168, 83, 0.25)) border-box;
+    linear-gradient(135deg, rgba(180, 180, 180, 0.2), rgba(100, 100, 100, 0.1), transparent) border-box;
 }
 
 .project-visual {
@@ -621,8 +621,10 @@ header .google-home-actions {
   color: var(--text-secondary);
   font-size: 13px;
   font-weight: 400;
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding-top: 26px;
+  padding-bottom: 15px;
+  padding-left: 13px;
+  padding-right: 16px;
   border-bottom: 3px solid transparent;
 }
 .google-tab:hover {
@@ -673,10 +675,7 @@ header .google-home-actions {
 
 /* Cinematic project case-study theming */
 .project-experience {
-  background:
-    radial-gradient(circle at 18% 10%, var(--project-glow), transparent 32%),
-    radial-gradient(circle at 82% 22%, color-mix(in srgb, var(--project-accent) 10%, transparent), transparent 28%),
-    var(--project-bg);
+  background: var(--project-bg);
   color: var(--project-text);
 }
 
@@ -746,6 +745,19 @@ header .google-home-actions {
 
 .project-experience pre {
   background: color-mix(in srgb, var(--project-surface-strong) 88%, transparent);
+}
+
+/* Floating pill navbar states */
+.navbar-flat {
+  background-color: var(--bg-color);
+}
+
+.navbar-pill {
+  background-color: color-mix(in srgb, var(--bg-color) 82%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
 }
 
 /* People also ask */

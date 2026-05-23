@@ -52,11 +52,21 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         <motion.div layoutId={`project-visual-${project.id}`} className="project-visual" aria-hidden>
-          <span className="project-visual-orbit" />
-          <span className="project-visual-node project-visual-node-a" />
-          <span className="project-visual-node project-visual-node-b" />
-          <span className="project-visual-node project-visual-node-c" />
-          <BarChart3 className="h-8 w-8" />
+          {project.thumbnail ? (
+            <img
+              src={project.thumbnail}
+              alt={project.title}
+              className="w-full h-full object-cover rounded-lg"
+            />
+          ) : (
+            <>
+              <span className="project-visual-orbit" />
+              <span className="project-visual-node project-visual-node-a" />
+              <span className="project-visual-node project-visual-node-b" />
+              <span className="project-visual-node project-visual-node-c" />
+              <BarChart3 className="h-8 w-8" />
+            </>
+          )}
         </motion.div>
       </div>
 

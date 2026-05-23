@@ -14,16 +14,26 @@ import ProjectCard from "../results/ProjectCard";
 import ExperienceTimeline from "../results/ExperienceTimeline";
 import SkillsGrid from "../results/SkillsGrid";
 import TerminalMode from "../results/TerminalMode";
-import AmbientBackground from "../ui/AmbientBackground";
-import StarBackground from "../ui/StarBackground";
+import DotField from "../ui/DotField";
 import GoogleAppsMenu from "../ui/GoogleAppsMenu";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
+import LogoLoop from "../ui/LogoLoop";
+import BorderGlow from "../ui/BorderGlow";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const LogoLoopAny = LogoLoop as any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const BorderGlowAny = BorderGlow as any;
 import {
-  Search, Code, Briefcase, Award, User,
-  ChevronDown, ChevronUp, Mail, FileText,
+  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs,
+  SiMongodb, SiPostgresql, SiPython, SiGit, SiExpress,
+} from "react-icons/si";
+import {
+  Search, Code, Briefcase, Award, User, Handshake,
+  ChevronDown, ChevronUp, Mail, FileText, Phone, MapPin,
 } from "lucide-react";
+import { Github, Linkedin } from "../ui/BrandIcons";
 
-type TabType = "all" | "projects" | "experience" | "skills" | "about";
+type TabType = "all" | "projects" | "experience" | "skills" | "about" | "hire";
 
 function SearchControllerContent() {
   const searchParams = useSearchParams();
@@ -40,6 +50,14 @@ function SearchControllerContent() {
   const [theme, setTheme] = useState<Theme>(() => getSavedTheme() ?? DEFAULT_THEME);
   const [searchTime, setSearchTime] = useState(0);
   const [liveQuery, setLiveQuery] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  
+  // Track scroll for floating pill header
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   
   // People Also Ask Accordion States
   const [paaOpen, setPaaOpen] = useState<Record<number, boolean>>({
@@ -182,11 +200,21 @@ function SearchControllerContent() {
 
   return (
     <div className="relative flex flex-col min-h-screen overflow-hidden bg-theme-main text-theme-primary transition-colors duration-300">
-      <AmbientBackground />
+      {/* DotField background — fixed, full-screen, behind all content */}
+      <div className="pointer-events-none fixed inset-0 z-0">
+        <DotField
+          dotRadius={3}
+          dotSpacing={35}
+          bulgeStrength={67}
+          glowRadius={160}
+          sparkle={false}
+          waveAmplitude={0}
+        />
+      </div>
       {/* 1. HOMEPAGE VIEW */}
       {view === "home" && (
         <>
-        <StarBackground />
+        
         <GoogleAppsMenu onNavigate={handleSearch} />
         <motion.main
           className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 pt-[12vh] pb-24"
@@ -195,13 +223,40 @@ function SearchControllerContent() {
           transition={{ duration: 0.45, ease: "easeOut" }}
         >
           <motion.div
-            className="mb-6"
+            className="mb-4"
             onClick={resetSearch}
             role="presentation"
             layoutId="portfolio-logo"
           >
             <GoogleLogo size="lg" interactive={true} />
           </motion.div>
+
+          {/* Tech stack logo loop — same width as search bar */}
+          <div className="w-full max-w-[584px] mb-4 overflow-hidden">
+            <LogoLoopAny
+              logos={[
+                { node: <SiReact />,      title: "React",      href: "https://react.dev" },
+                { node: <SiNextdotjs />,  title: "Next.js",    href: "https://nextjs.org" },
+                { node: <SiTypescript />, title: "TypeScript", href: "https://www.typescriptlang.org" },
+                { node: <SiTailwindcss />,title: "Tailwind",   href: "https://tailwindcss.com" },
+                { node: <SiNodedotjs />,  title: "Node.js",    href: "https://nodejs.org" },
+                { node: <SiMongodb />,    title: "MongoDB",    href: "https://mongodb.com" },
+                { node: <SiPostgresql />, title: "PostgreSQL", href: "https://postgresql.org" },
+                { node: <SiPython />,     title: "Python",     href: "https://python.org" },
+                { node: <SiGit />,        title: "Git",        href: "https://git-scm.com" },
+                { node: <SiExpress />,    title: "Express",    href: "https://expressjs.com" },
+              ]}
+              speed={60}
+              direction="left"
+              logoHeight={20}
+              gap={36}
+              hoverSpeed={0}
+              fadeOut
+              scaleOnHover
+              ariaLabel="Tech stack"
+              style={{ color: "var(--text-tertiary)" }}
+            />
+          </div>
 
           <motion.div layoutId="portfolio-search" className="w-full max-w-[584px]">
             <SearchBox onSearch={handleSearch} onQueryChange={setLiveQuery} variant="home" />
@@ -255,24 +310,16 @@ function SearchControllerContent() {
 
       {/* 2. RESULTS VIEW */}
       {view === "results" && (
-        <motion.main
-          className="relative z-10 flex-1 flex flex-col bg-theme-main/90 backdrop-blur-[2px]"
-          initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ type: "spring", stiffness: 120, damping: 20 }}
-        >
-          {/* Top Bar Header */}
-          <header className="border-b border-theme-custom bg-theme-main py-3 px-4 md:px-[180px] flex flex-col md:flex-row md:items-center gap-3 sticky top-0 z-30">
+        <>
+          {/* Top Bar Header — fixed at top */}
+          <header className="fixed top-0 left-0 right-0 z-30 border-b border-theme-custom bg-theme-main py-3 px-4 md:px-[180px] flex flex-col md:flex-row md:items-center gap-3">
             <div className="flex items-center justify-between gap-4">
-              {/* Colored Logo */}
               <motion.div onClick={resetSearch} layoutId="portfolio-logo">
                 <GoogleLogo size="sm" interactive={true} />
               </motion.div>
-
               <div className="flex md:hidden items-center gap-2" />
             </div>
 
-            {/* Input Search Box */}
             <motion.div layoutId="portfolio-search" className="flex-1 max-w-xl md:ml-4">
               <SearchBox
                 key={query}
@@ -283,35 +330,49 @@ function SearchControllerContent() {
               />
             </motion.div>
 
-            {/* Settings dropdown */}
             <div className="hidden md:flex items-center gap-2 ml-auto">
               <GoogleAppsMenu onNavigate={handleSearch} />
               <ThemeSwitcher theme={theme} onChange={changeTheme} compact />
             </div>
           </header>
 
-          {/* Google Search Tabs */}
-          <nav className="border-b border-theme-custom bg-theme-main px-4 md:px-[180px] py-3 flex gap-8 overflow-x-auto scrollbar-none">
-            {(
-              [
-                { id: "all" as const, label: "All", icon: Search },
-                { id: "projects" as const, label: "Projects", icon: Code },
-                { id: "experience" as const, label: "Experience", icon: Briefcase },
-                { id: "skills" as const, label: "Skills", icon: Award },
-                { id: "about" as const, label: "About", icon: User },
-              ] as const
-            ).map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setActiveTab(id)}
-                className={`google-tab flex items-center gap-1.5 whitespace-nowrap ${activeTab === id ? "is-active" : ""}`}
-              >
-                <Icon className="w-4 h-4 opacity-70" /> {label}
-              </button>
-            ))}
-          </nav>
+          {/* Tabs Nav — fixed below header, morphs into pill on scroll */}
+          <div className={`fixed left-0 right-0 z-20 flex justify-center transition-all duration-500 ease-in-out ${
+            isScrolled ? "top-[57px] px-4 py-2" : "top-[57px] px-0 py-0"
+          }`}>
+            <nav className={`flex overflow-x-auto scrollbar-none transition-all duration-500 ease-in-out ${
+              isScrolled
+                ? "navbar-pill rounded-full px-4 py-1 gap-1"
+                : "navbar-flat w-full border-b border-theme-custom px-4 md:px-[180px] gap-8 justify-center"
+            }`}>
+              {(
+                [
+                  { id: "all" as const, label: "All", icon: Search },
+                  { id: "projects" as const, label: "Projects", icon: Code },
+                  { id: "experience" as const, label: "Experience", icon: Briefcase },
+                  { id: "skills" as const, label: "Skills", icon: Award },
+                  { id: "about" as const, label: "About", icon: User },
+                  { id: "hire" as const, label: "Hire", icon: Handshake },
+                ] as const
+              ).map(({ id, label, icon: Icon }) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => id === "hire" ? setActiveTab("hire") : setActiveTab(id)}
+                  className={`google-tab flex items-center gap-1.5 whitespace-nowrap ${activeTab === id ? "is-active" : ""}`}
+                >
+                  <Icon className="w-4 h-4 opacity-70" /> {label}
+                </button>
+              ))}
+            </nav>
+          </div>
 
+        <motion.main
+          className="relative z-10 flex-1 flex flex-col bg-theme-main/90 backdrop-blur-[2px] pt-[120px]"
+          initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ type: "spring", stiffness: 120, damping: 20 }}
+        >
           {/* Results Main Area */}
           <motion.div
             className="flex-1 w-full mx-auto px-4 md:px-[180px] py-5 grid grid-cols-1 lg:grid-cols-12 gap-10"
@@ -396,7 +457,69 @@ function SearchControllerContent() {
                 </div>
               )}
 
-              {/* 5. General Web Search Results (Fallback when activeTab is all) */}
+              {/* 5. Hire Tab */}
+              {activeTab === "hire" && (
+                <div className="space-y-6 max-w-2xl">
+                  <div className="space-y-1">
+                    <h3 className="text-2xl font-normal text-theme-primary">Want to hire Agamjot?</h3>
+                    <p className="text-sm text-theme-secondary leading-relaxed">
+                      You made the right decision :)
+Looking for SDE internships where I can build scalable products, work on solid backend systems, and experiment with AI-powered experiences.                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Contact details */}
+                    <div className="google-panel p-4 space-y-3">
+                      <h4 className="text-xs font-bold text-theme-muted uppercase tracking-wider">Direct contact</h4>
+                      <div className="space-y-3">
+                        <a href={`mailto:${bio.email}`} className="flex items-center gap-3 text-sm text-theme-primary hover:text-google-link transition-colors group">
+                          <Mail className="w-4 h-4 text-theme-accent shrink-0" />
+                          <span className="group-hover:underline">{bio.email}</span>
+                        </a>
+                        <div className="flex items-center gap-3 text-sm text-theme-primary">
+                          <Phone className="w-4 h-4 text-theme-accent shrink-0" />
+                          <span>{bio.phone}</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-sm text-theme-primary">
+                          <MapPin className="w-4 h-4 text-theme-accent shrink-0" />
+                          <span>{bio.location}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Social + Resume */}
+                    <div className="google-panel p-4 space-y-3">
+                      <h4 className="text-xs font-bold text-theme-muted uppercase tracking-wider">Profiles & Resume</h4>
+                      <div className="flex flex-col gap-2">
+                        <a href={bio.linkedin} target="_blank" rel="noopener noreferrer"
+                          className="flex items-center gap-2 py-2 px-3 rounded-lg bg-theme-elevated hover:bg-theme-card transition-colors text-sm text-theme-primary font-medium border border-theme-custom">
+                          <Linkedin className="w-4 h-4 text-google-link" /> LinkedIn
+                        </a>
+                        <a href={bio.github} target="_blank" rel="noopener noreferrer"
+                          className="flex items-center gap-2 py-2 px-3 rounded-lg bg-theme-elevated hover:bg-theme-card transition-colors text-sm text-theme-primary font-medium border border-theme-custom">
+                          <Github className="w-4 h-4" /> GitHub
+                        </a>
+                        <a href={bio.resumeUrl} download
+                          className="google-btn flex items-center justify-center gap-2 text-sm no-underline mt-1">
+                          <FileText className="w-4 h-4" /> Download Resume
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Why hire */}
+                  <div className="google-panel p-4 space-y-3">
+                    <h4 className="text-xs font-bold text-theme-muted uppercase tracking-wider">Why Agamjot?</h4>
+                    <ul className="list-disc pl-5 space-y-2 text-sm text-theme-primary">
+                      {bio.strengths.map((str, idx) => (
+                        <li key={idx} className="leading-relaxed">{str}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {/* 6. General Web Search Results (Fallback when activeTab is all) */}
               {activeTab === "all" && (
                 <div className="space-y-6">
                   {/* People Also Ask Block */}
@@ -470,7 +593,18 @@ function SearchControllerContent() {
               variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
               transition={{ type: "spring", stiffness: 120, damping: 18 }}
             >
-              <div className="google-panel p-4 space-y-4">
+              <BorderGlowAny
+                edgeSensitivity={25}
+                glowColor="260 60 70"
+                backgroundColor="var(--bg-card)"
+                borderRadius={8}
+                glowRadius={32}
+                glowIntensity={0.9}
+                coneSpread={20}
+                animated
+                colors={['#a78bfa', '#818cf8', '#38bdf8']}
+              >
+              <div className="p-4 space-y-4">
                 {/* Photo & Name */}
                 <div className="flex gap-4 items-center">
                   <img
@@ -533,6 +667,7 @@ function SearchControllerContent() {
                   </a>
                 </div>
               </div>
+              </BorderGlowAny>
 
               {/* Related Searches */}
               <div className="google-panel p-4 space-y-3">
@@ -581,6 +716,7 @@ function SearchControllerContent() {
             <div>&copy; {new Date().getFullYear()} Agamjot Singh</div>
           </footer>
         </motion.main>
+        </>
       )}
 
     </div>

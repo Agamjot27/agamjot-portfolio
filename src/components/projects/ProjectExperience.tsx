@@ -28,6 +28,8 @@ import {
 import type { Project } from "@/data/portfolioData";
 import { projects } from "@/data/portfolioData";
 import { Github } from "@/components/ui/BrandIcons";
+import BounceCards from "@/components/ui/BounceCards";
+import Particles from "@/components/ui/Particles";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 import { applyTheme, DEFAULT_THEME, getSavedTheme, persistTheme, type Theme } from "@/lib/theme";
 
@@ -346,12 +348,38 @@ function getJourney(project: Project) {
   ];
 }
 
-function getGallery(project: Project) {
-  const visual = project.screenshot ?? (project.id === "clubops" ? "/assets/public/images/project3.png" : project.id === "revault" ? "/assets/public/images/project2.png" : "/assets/public/images/project1.png");
+function getBounceImages(project: Project) {
+  // If the project has a screenshots array, use those directly
+  if (project.screenshots && project.screenshots.length > 0) {
+    const fallbacks = [
+      "/assets/public/images/project1.png",
+      "/assets/public/images/project2.png",
+      "/assets/public/images/project3.png",
+      "/assets/public/images/readme-bottom.png",
+      "/assets/public/images/readme.png",
+    ];
+    // Pad to 5 with fallbacks if fewer than 5 provided
+    const imgs = [...project.screenshots];
+    while (imgs.length < 5) imgs.push(fallbacks[imgs.length % fallbacks.length]);
+    return imgs.slice(0, 5).map((image, i) => ({
+      title: i === 0 ? "Featured product screen" : `Screen ${i + 1}`,
+      image,
+    }));
+  }
+
+  // Legacy fallback using single screenshot field
+  const visual = project.screenshot ?? (
+    project.id === "clubops" ? "/assets/public/images/project3.png" :
+    project.id === "revault" ? "/assets/public/images/project2.png" :
+    "/assets/public/images/project1.png"
+  );
+
   return [
-    { title: "Product surface", image: visual },
-    { title: "Architecture map", image: "/assets/public/images/devices.png" },
-    { title: "Interaction flow", image: "/assets/public/images/readme.png" },
+    { title: "Featured product screen", image: visual },
+    { title: "Project one capture",     image: "/assets/public/images/project1.png" },
+    { title: "Project two capture",     image: "/assets/public/images/project2.png" },
+    { title: "Project three capture",   image: "/assets/public/images/project3.png" },
+    { title: "Extended website view",   image: "/assets/public/images/readme-bottom.png" },
   ];
 }
 
@@ -399,7 +427,7 @@ function DetailButton({ children, href, primary = false }: { children: React.Rea
       className={[
         "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold transition",
         primary
-          ? "bg-white text-[#0b0f19] shadow-[0_0_34px_rgba(138,180,248,0.28)]"
+          ? "bg-white text-[#111214] shadow-[0_0_34px_rgba(138,180,248,0.28)]"
           : "border border-white/15 bg-white/[0.06] text-white hover:border-[#8ab4f8]/55",
       ].join(" ")}
     >
@@ -443,7 +471,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
   const stack = useMemo(() => getStack(project), [project]);
   const architecture = useMemo(() => getArchitecture(project), [project]);
   const journey = useMemo(() => getJourney(project), [project]);
-  const gallery = useMemo(() => getGallery(project), [project]);
+  const bounceGallery = useMemo(() => getBounceImages(project), [project]);
   const panels = useMemo(() => codePanels(project), [project]);
   const related = useMemo(() => projects.filter((item) => item.id !== project.id).slice(0, 3), [project.id]);
   const activeArchNode = architecture.find((node) => node.id === activeNode) ?? architecture[0];
@@ -473,30 +501,45 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
       className="project-experience relative min-h-screen overflow-hidden bg-[var(--project-bg)] text-[var(--project-text)] transition-colors duration-500"
     >
       <div className="pointer-events-none fixed inset-0 z-0">
+        <div className="absolute inset-0 opacity-20 mix-blend-screen">
+          <Particles
+            particleColors={["#ffffff", "#aaaaaa", "#cccccc"]}
+            particleCount={120}
+            particleSpread={9}
+            speed={0.07}
+            particleBaseSize={76}
+            sizeRandomness={1}
+            alphaParticles
+            moveParticlesOnHover
+            particleHoverFactor={0.3}
+            cameraDistance={22}
+            pixelRatio={1}
+          />
+        </div>
         <motion.div
-          className="absolute inset-0 opacity-80"
+          className="absolute inset-0 opacity-25"
           animate={{ backgroundPosition: ["0% 0%", "100% 70%", "0% 0%"] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           style={{
             background:
-              "radial-gradient(circle at 20% 20%, var(--project-glow), transparent 28%), radial-gradient(circle at 78% 10%, color-mix(in srgb, var(--project-accent) 10%, transparent), transparent 24%), radial-gradient(circle at 72% 78%, color-mix(in srgb, var(--project-text) 7%, transparent), transparent 30%)",
+              "radial-gradient(circle at 20% 20%, var(--project-glow), transparent 28%), radial-gradient(circle at 78% 10%, color-mix(in srgb, var(--project-accent) 6%, transparent), transparent 24%), radial-gradient(circle at 72% 78%, color-mix(in srgb, var(--project-text) 4%, transparent), transparent 30%)",
             backgroundSize: "120% 120%",
           }}
         />
-        <div className="absolute inset-0 bg-[linear-gradient(color-mix(in_srgb,var(--project-accent)_10%,transparent)_1px,transparent_1px),linear-gradient(90deg,color-mix(in_srgb,var(--project-accent)_10%,transparent)_1px,transparent_1px)] bg-[size:54px_54px] [mask-image:radial-gradient(circle_at_50%_22%,black,transparent_72%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(color-mix(in_srgb,var(--project-accent)_5%,transparent)_1px,transparent_1px),linear-gradient(90deg,color-mix(in_srgb,var(--project-accent)_5%,transparent)_1px,transparent_1px)] bg-[size:54px_54px] [mask-image:radial-gradient(circle_at_50%_22%,black,transparent_72%)]" />
         {Array.from({ length: 22 }).map((_, index) => (
           <motion.span
             key={index}
             className="absolute h-1 w-1 rounded-full bg-[var(--project-accent)] shadow-[0_0_18px_var(--project-glow)]"
             style={{ left: `${(index * 37) % 100}%`, top: `${(index * 19) % 100}%` }}
-            animate={{ opacity: [0.2, 0.9, 0.2], y: [0, -18, 0] }}
+            animate={{ opacity: [0.05, 0.25, 0.05], y: [0, -18, 0] }}
             transition={{ duration: 4 + (index % 5), repeat: Infinity, delay: index * 0.13 }}
           />
         ))}
       </div>
 
       <motion.div
-        className="pointer-events-none fixed inset-0 z-10 bg-[#0b0f19]"
+        className="pointer-events-none fixed inset-0 z-10 bg-[#111214]"
         initial={{ opacity: 1, backdropFilter: "blur(18px)" }}
         animate={{ opacity: 0, backdropFilter: "blur(0px)" }}
         transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
@@ -577,83 +620,43 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
             initial={{ opacity: 0, scale: 0.82, y: 36 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 90, damping: 18, delay: 0.12 }}
-            className="relative min-h-[520px] rounded-[28px] border border-white/10 bg-[#111827]/75 p-4 shadow-[0_34px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl [perspective:1000px]"
+            className="relative min-h-[520px] rounded-[28px] border border-white/10 bg-[#111214]/75 p-4 shadow-[0_34px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl [perspective:1000px]"
           >
             <div className="absolute -inset-1 rounded-[32px] bg-[radial-gradient(circle_at_35%_20%,rgba(138,180,248,0.28),transparent_36%),radial-gradient(circle_at_70%_80%,rgba(85,214,190,0.16),transparent_35%)] blur-xl" />
-            <div className="relative h-full min-h-[488px] overflow-hidden rounded-[22px] border border-white/10 bg-[#0b0f19]">
+            <div className="relative h-full min-h-[488px] overflow-visible rounded-[22px] border border-white/10 bg-[#111214]">
               <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
                 <div className="flex gap-2">
                   <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
                   <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
                   <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
                 </div>
-                <span className="text-xs uppercase tracking-[0.22em] text-[#9ca3af]">Live system preview</span>
+                <span className="text-xs uppercase tracking-[0.22em] text-[#9ca3af]">Project screen preview</span>
               </div>
 
-              <div className="relative grid h-[432px] place-items-center overflow-hidden">
-                <motion.div
-                  className="absolute h-64 w-64 rounded-full border border-[#8ab4f8]/25"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+              <div className="relative flex h-[432px] flex-col items-center justify-center overflow-visible px-5 py-8">
+                <div className="absolute inset-0 overflow-hidden rounded-b-[22px] bg-[radial-gradient(circle_at_35%_30%,rgba(138,180,248,0.14),transparent_34%),radial-gradient(circle_at_75%_70%,rgba(85,214,190,0.12),transparent_34%)]" />
+                <BounceCards
+                  className="project-photo-stack"
+                  images={bounceGallery.map((item) => item.image)}
+                  containerWidth={640}
+                  containerHeight={280}
+                  animationDelay={0.35}
+                  animationStagger={0.08}
+                  easeType="elastic.out(1, 0.5)"
+                  transformStyles={[
+                    "rotate(5deg) translate(-210px)",
+                    "rotate(-4deg) translate(-105px)",
+                    "rotate(2deg)",
+                    "rotate(6deg) translate(105px)",
+                    "rotate(-5deg) translate(210px)",
+                  ]}
+                  enableHover
+                  onCardClick={(_, index) => setGalleryItem(bounceGallery[index])}
                 />
-                <motion.div
-                  className="absolute h-96 w-96 rounded-full border border-dashed border-white/10"
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 34, repeat: Infinity, ease: "linear" }}
-                />
-                {architecture.map((node, index) => {
-                  const Icon = node.icon;
-                  return (
-                    <motion.button
-                      key={node.id}
-                      type="button"
-                      onMouseEnter={() => setActiveNode(node.id)}
-                      whileHover={{ scale: 1.08, y: -3 }}
-                      className={[
-                        "absolute grid h-20 w-20 place-items-center rounded-2xl border text-white shadow-[0_0_28px_rgba(138,180,248,0.18)] transition",
-                        activeNode === node.id ? "border-[#8ab4f8] bg-[#8ab4f8]/18" : "border-white/12 bg-white/[0.06]",
-                      ].join(" ")}
-                      style={{ left: `${node.x}%`, top: `${node.y}%`, transform: "translate(-50%, -50%)" }}
-                      animate={{ y: [0, index % 2 ? -8 : 8, 0] }}
-                      transition={{ duration: 5 + index, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <Icon className="h-7 w-7" />
-                    </motion.button>
-                  );
-                })}
-                <svg className="absolute inset-0 h-full w-full">
-                  {architecture.flatMap((node) =>
-                    node.links.map((target) => {
-                      const next = architecture.find((item) => item.id === target);
-                      if (!next) return null;
-                      const hot = activeNode === node.id || activeNode === next.id;
-                      return (
-                        <motion.line
-                          key={`${node.id}-${target}`}
-                          x1={`${node.x}%`}
-                          y1={`${node.y}%`}
-                          x2={`${next.x}%`}
-                          y2={`${next.y}%`}
-                          stroke={hot ? "#8ab4f8" : "rgba(255,255,255,0.14)"}
-                          strokeWidth={hot ? 2.4 : 1.2}
-                          strokeDasharray="6 8"
-                          initial={{ pathLength: 0 }}
-                          animate={{ pathLength: 1, strokeDashoffset: [0, -28] }}
-                          transition={{ pathLength: { duration: 1.1 }, strokeDashoffset: { duration: 2, repeat: Infinity, ease: "linear" } }}
-                        />
-                      );
-                    })
-                  )}
-                </svg>
-                <motion.div
-                  className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/10 bg-[#111827]/85 p-4 text-left backdrop-blur"
-                  key={activeArchNode.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
-                  <p className="text-sm font-semibold text-white">{activeArchNode.label}</p>
-                  <p className="mt-1 text-sm leading-5 text-[#9ca3af]">{activeArchNode.detail}</p>
-                </motion.div>
+                <div className="relative mt-5 flex items-center gap-2 rounded-full border border-white/10 bg-[#111214]/80 px-4 py-2 text-sm text-[#c7d2fe] backdrop-blur">
+                  <Eye className="h-4 w-4 text-[#8ab4f8]" />
+                  Click a card to preview the project screens
+                </div>
               </div>
             </div>
           </motion.div>
@@ -685,7 +688,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
                   key={String(label)}
                   variants={reveal}
                   whileHover={{ y: -6 }}
-                  className={["rounded-2xl border border-white/10 bg-[#111827]/70 p-5 backdrop-blur", index === 0 ? "md:col-span-2" : ""].join(" ")}
+                  className={["rounded-2xl border border-white/10 bg-[#111214]/70 p-5 backdrop-blur", index === 0 ? "md:col-span-2" : ""].join(" ")}
                 >
                   <CardIcon className="h-5 w-5 text-[#8ab4f8]" />
                   <h3 className="mt-5 text-lg font-semibold text-white">{String(label)}</h3>
@@ -714,7 +717,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
                 key={tech.name}
                 variants={reveal}
                 whileHover={{ rotateX: 5, rotateY: -5, y: -8 }}
-                className="group relative min-h-64 rounded-2xl border border-white/10 bg-[#111827]/75 p-5 [transform-style:preserve-3d]"
+                className="group relative min-h-64 rounded-2xl border border-white/10 bg-[#111214]/75 p-5 [transform-style:preserve-3d]"
               >
                 <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_50%_0%,rgba(138,180,248,0.18),transparent_45%)] opacity-0 transition group-hover:opacity-100" />
                 <div className="relative flex h-full flex-col justify-between">
@@ -725,7 +728,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
                     <h3 className="mt-5 text-2xl font-semibold text-white">{tech.name}</h3>
                     <p className="mt-3 text-sm leading-6 text-[#9ca3af]">{tech.why}</p>
                   </div>
-                  <div className="mt-6 overflow-hidden rounded-xl border border-white/10 bg-[#0b0f19]/80 p-4 opacity-80 transition group-hover:opacity-100">
+                  <div className="mt-6 overflow-hidden rounded-xl border border-white/10 bg-[#111214]/80 p-4 opacity-80 transition group-hover:opacity-100">
                     <p className="text-xs uppercase tracking-[0.2em] text-[#8ab4f8]">Role</p>
                     <p className="mt-2 text-sm text-[#dbeafe]">{tech.role}</p>
                     <p className="mt-3 text-xs text-[#9ca3af]">{tech.benefit}</p>
@@ -748,7 +751,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              className="relative min-h-[460px] overflow-hidden rounded-3xl border border-white/10 bg-[#111827]/70"
+              className="relative min-h-[460px] overflow-hidden rounded-3xl border border-white/10 bg-[#111214]/70"
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(138,180,248,0.16),transparent_46%)]" />
               <svg className="absolute inset-0 h-full w-full">
@@ -785,7 +788,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
                     whileHover={{ scale: 1.05 }}
                     className={[
                       "absolute w-36 -translate-x-1/2 -translate-y-1/2 rounded-2xl border p-4 text-left backdrop-blur transition",
-                      activeNode === node.id ? "border-[#8ab4f8] bg-[#8ab4f8]/15" : "border-white/10 bg-[#0b0f19]/75",
+                      activeNode === node.id ? "border-[#8ab4f8] bg-[#8ab4f8]/15" : "border-white/10 bg-[#111214]/75",
                     ].join(" ")}
                     style={{ left: `${node.x}%`, top: `${node.y}%` }}
                   >
@@ -800,7 +803,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
               key={activeArchNode.id}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="rounded-3xl border border-white/10 bg-[#111827]/80 p-6"
+              className="rounded-3xl border border-white/10 bg-[#111214]/80 p-6"
             >
               <activeArchNode.icon className="h-8 w-8 text-[#8ab4f8]" />
               <p className="mt-5 text-xs font-bold uppercase tracking-[0.24em] text-[#8ab4f8]">{activeArchNode.group}</p>
@@ -840,7 +843,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
             className="grid gap-4 md:grid-cols-3"
           >
             {journey.map((step, index) => (
-              <motion.article key={step.phase} variants={reveal} className="relative rounded-2xl border border-white/10 bg-[#111827]/70 p-5">
+              <motion.article key={step.phase} variants={reveal} className="relative rounded-2xl border border-white/10 bg-[#111214]/70 p-5">
                 <span className="text-xs font-bold uppercase tracking-[0.22em] text-[#8ab4f8]">{String(index + 1).padStart(2, "0")} / {step.phase}</span>
                 <h3 className="mt-4 text-xl font-semibold text-white">{step.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-[#9ca3af]">{step.copy}</p>
@@ -866,7 +869,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
                   whileHover={{ x: 4 }}
                   className={[
                     "min-w-[270px] rounded-2xl border p-4 text-left transition lg:min-w-0",
-                    activeFeature === feature ? "border-[#8ab4f8] bg-[#8ab4f8]/12" : "border-white/10 bg-[#111827]/70",
+                    activeFeature === feature ? "border-[#8ab4f8] bg-[#8ab4f8]/12" : "border-white/10 bg-[#111214]/70",
                   ].join(" ")}
                 >
                   <span className="text-xs font-bold uppercase tracking-[0.22em] text-[#8ab4f8]">Feature {index + 1}</span>
@@ -878,7 +881,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
               key={activeFeature}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="relative min-h-[390px] overflow-hidden rounded-3xl border border-white/10 bg-[#111827]/80 p-6"
+              className="relative min-h-[390px] overflow-hidden rounded-3xl border border-white/10 bg-[#111214]/80 p-6"
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(138,180,248,0.22),transparent_34%)]" />
               <div className="relative flex items-center justify-between">
@@ -889,7 +892,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
                 {[0, 1, 2].map((item) => (
                   <motion.div
                     key={item}
-                    className="rounded-2xl border border-white/10 bg-[#0b0f19]/70 p-4"
+                    className="rounded-2xl border border-white/10 bg-[#111214]/70 p-4"
                     animate={{ y: [0, item === 1 ? -12 : 10, 0] }}
                     transition={{ duration: 4 + item, repeat: Infinity, ease: "easeInOut" }}
                   >
@@ -920,7 +923,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true }}
-                  className="rounded-3xl border border-white/10 bg-[#111827]/75 p-6"
+                  className="rounded-3xl border border-white/10 bg-[#111214]/75 p-6"
                 >
                   <div className="relative mx-auto grid h-40 w-40 place-items-center rounded-full">
                     <svg viewBox="0 0 120 120" className="absolute inset-0 h-full w-full -rotate-90">
@@ -951,7 +954,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              className="rounded-3xl border border-white/10 bg-[#111827]/75 p-6"
+              className="rounded-3xl border border-white/10 bg-[#111214]/75 p-6"
             >
               <Gauge className="h-8 w-8 text-[#8ab4f8]" />
               <p className="mt-8 text-4xl font-semibold text-white">60fps</p>
@@ -969,7 +972,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
             title="Engineering details without leaving the experience."
             copy="Tabbed snippets expose the technical thinking behind the surface in small, recruiter-friendly chunks."
           />
-          <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#111827]/80">
+          <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#111214]/80">
             <div className="flex gap-2 overflow-x-auto border-b border-white/10 p-3">
               {(Object.keys(panels) as Array<keyof typeof panels>).map((panel) => (
                 <button
@@ -978,7 +981,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
                   onClick={() => setActiveCode(panel)}
                   className={[
                     "rounded-full px-4 py-2 text-sm font-semibold capitalize transition",
-                    activeCode === panel ? "bg-white text-[#0b0f19]" : "bg-white/[0.05] text-[#9ca3af] hover:text-white",
+                    activeCode === panel ? "bg-white text-[#111214]" : "bg-white/[0.05] text-[#9ca3af] hover:text-white",
                   ].join(" ")}
                 >
                   {panel}
@@ -993,38 +996,6 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
             >
               <code>{panels[activeCode]}</code>
             </motion.pre>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-5 py-20 md:px-8">
-          <SectionTitle
-            eyebrow="Gallery"
-            title="Visual breaks for product memory."
-            copy="Screens, diagrams, and flows open in a cinematic viewer instead of becoming static thumbnails."
-          />
-          <div className="flex snap-x gap-4 overflow-x-auto pb-4">
-            {gallery.map((item) => (
-              <motion.button
-                type="button"
-                key={item.title}
-                onClick={() => setGalleryItem(item)}
-                whileHover={{ scale: 1.03 }}
-                className="group relative h-80 min-w-[82vw] overflow-hidden rounded-3xl border border-white/10 bg-[#111827] text-left sm:min-w-[440px]"
-              >
-                <Image
-                  src={item.image}
-                  alt=""
-                  fill
-                  sizes="(max-width: 640px) 82vw, 440px"
-                  className="object-cover opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-90"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent" />
-                <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between">
-                  <span className="text-xl font-semibold text-white">{item.title}</span>
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-white text-[#0b0f19]"><Eye className="h-4 w-4" /></span>
-                </div>
-              </motion.button>
-            ))}
           </div>
         </section>
 
@@ -1047,7 +1018,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true }}
-                className="rounded-2xl border border-white/10 bg-[#111827]/65 p-5"
+                className="rounded-2xl border border-white/10 bg-[#111214]/65 p-5"
               >
                 <h3 className="text-lg font-semibold text-white">{title}</h3>
                 <p className="mt-3 text-sm leading-6 text-[#9ca3af]">{copy}</p>
@@ -1063,7 +1034,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
           </div>
           <div className="flex gap-4 overflow-x-auto pb-4">
             {related.map((item) => (
-              <Link key={item.id} href={`/projects/${item.id}`} className="group min-w-[310px] rounded-2xl border border-white/10 bg-[#111827]/75 p-5 transition hover:-translate-y-1 hover:border-[#8ab4f8]/45">
+              <Link key={item.id} href={`/projects/${item.id}`} className="group min-w-[310px] rounded-2xl border border-white/10 bg-[#111214]/75 p-5 transition hover:-translate-y-1 hover:border-[#8ab4f8]/45">
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8ab4f8]">{item.category}</p>
                 <h3 className="mt-4 text-xl font-semibold text-white">{item.title}</h3>
                 <p className="mt-3 line-clamp-3 text-sm leading-6 text-[#9ca3af]">{item.description}</p>
@@ -1085,7 +1056,7 @@ export default function ProjectExperience({ project }: ProjectExperienceProps) {
               initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.92, opacity: 0 }}
-              className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-[#111827]"
+              className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-[#111214]"
             >
               <button
                 type="button"
