@@ -258,6 +258,14 @@ export const projects: Project[] = [
   {
     id: "clubops",
     title: "ClubOps — Event & Member App",
+    screenshots: [
+      "/screenshots/clubops-memdash.png",
+      "/screenshots/clubops-profile.png",
+      "/screenshots/clubops-event.png",
+      "/screenshots/clubops-comm.png",
+      "/screenshots/clubops-direc.png",
+    ],
+    thumbnail: "/screenshots/clubops-memdash.png",
     description:
       "Cross-platform club app for events and member communication, serving 100+ users.",
     longDescription:
